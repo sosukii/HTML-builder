@@ -1,27 +1,26 @@
 const path = require('path')
 const {readdir} = require('node:fs/promises')
-const {copyFile, promises, mkdir} = require('fs')
+const {copyFile, mkdir, promises} = require('fs')
 
 const donorFolderPath = path.join(__dirname, 'files')
 const newFolderPath = path.join(__dirname, 'files-copy')
-
-async function makeDirIfNotExist(dirPath){
-  try{
-    await promises.access(dirPath)
-  } catch(e){
-    mkdir(dirPath, (err, result) => {
-      if(err){
-        console.error(err)
-      }
-    })
-  }
-}
 
 async function copyDir(){
   try {
     const files = await readdir(donorFolderPath);
 
-    makeDirIfNotExist(newFolderPath)
+    mkdir(newFolderPath, {recursive: true}, err => {
+      if(err){
+        console.error(err)
+      }
+      console.log('создаем папку - успешно')
+    })
+
+    const filesNew = await readdir(newFolderPath);
+    for(const newFile of filesNew){
+      await promises.rm(path.join(__dirname, 'files-copy', newFile))
+
+    }
 
     for (const file of files){
       const pathToDonorFile = path.join(donorFolderPath, file)
