@@ -10,7 +10,7 @@
 
 ### Цели задания
 
-- Научиться получать информацию о файлах.  
+- Научиться получать информацию о файлах.
 
 ### Описание
 
@@ -32,12 +32,12 @@
 
 Для определения расширения файла вы можете использовать метод ```extname``` модуля "path". [Документация](https://nodejs.org/api/path.html#path_path_extname_path)
 
-Получить информацию о файле поможет [stat](https://nodejs.org/dist/latest-v16.x/docs/api/fs.html#fs_fs_stat_path_options_callback). 
+Получить информацию о файле поможет [stat](https://nodejs.org/dist/latest-v16.x/docs/api/fs.html#fs_fs_stat_path_options_callback).
 Полный перечень данных которые возвращает данная функция вы можете увидеть в документации. Обратите внимание, что возвращаемый данной функцией объект является инстансом класса [Stats](https://nodejs.org/dist/latest-v16.x/docs/api/fs.html#fs_class_fs_stats), который так же имеет методы позволяющие проверить является ли объект файлом.
 
 ##### Полезные ссылки
 *Обратите внимание, что переводы документации на русский язык могут быть устаревшими и не содержать всех современных возможностей модулей. Однако, основные концепции описанные там работают и по сей день. Для получения актуальной информации всегда используйте официальную документацию!*
 
-- [stat на русском (nodejsdev.ru)](https://nodejsdev.ru/api/fs/#fsstat)  
-- [readdir на русском (nodejsdev.ru)](https://nodejsdev.ru/api/fs/#fsreaddir)  
-- [Stats на русском (nodejsdev.ru)](https://nodejsdev.ru/api/fs/#fsstats)  
+- [stat на русском (nodejsdev.ru)](https://nodejsdev.ru/api/fs/#fsstat)
+- [readdir на русском (nodejsdev.ru)](https://nodejsdev.ru/api/fs/#fsreaddir)
+- [Stats на русском (nodejsdev.ru)](https://nodejsdev.ru/api/fs/#fsstats)
