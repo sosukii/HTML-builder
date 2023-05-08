@@ -20,7 +20,7 @@ async function getInfo(){
             console.error(error)
           } else{
             const size = stats.size
-            console.log(`${name} - ${type} - ${size}kb`);
+            console.log(`${name} - ${type} - ${size}b`);
           }
         })
       }
