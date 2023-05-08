@@ -7,9 +7,13 @@ stdout.write('Hello there!~ Enter some text below:\n')
 
 stdin.on('data', value => {
   if(value.toString().trim() === 'exit'){
+    console.log('bye bye~ have a nice day!');
     process.exit()
   }
   writeStream.write(value.toString())
 })
 
-process.on('SIGINT', () => process.exit())
+process.on('SIGINT', () => {
+  console.log('bye bye~ have a nice day!');
+  process.exit()
+})
