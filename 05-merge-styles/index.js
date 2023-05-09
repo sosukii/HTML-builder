@@ -1,11 +1,13 @@
 const path = require('path')
-const {readdir} = require('node:fs/promises')
+const {readdir, rm} = require('node:fs/promises')
 const {appendFile, readFile} = require('fs')
 
 const bundleFilePath = path.join(__dirname, 'project-dist', 'bundle.css')
 const pathToStyles = path.join(__dirname, 'styles')
 
 async function merge(){
+  await rm(bundleFilePath, {recursive: true, force: true});
+
   appendFile(bundleFilePath, '', err => {
     if(err){
       console.error(err)
