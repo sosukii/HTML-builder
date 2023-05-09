@@ -11,7 +11,7 @@
 // в цикле аппендить на место одноименного компонента - код из одноименного файла хтмл  - DONE
 
 const path = require('path')
-const {readdir, readFile, writeFile} = require('node:fs/promises')
+const {readdir, readFile, writeFile, rm} = require('node:fs/promises')
 const {appendFile, mkdir, copyFile, promises} = require('fs')
 
 const pathToDist = path.join(__dirname, 'project-dist')
@@ -68,23 +68,22 @@ async function createCssBundle(pathToStylesDonor, pathToStyleDist){
   for(const file of files){
     if(file.split('.')[1] === 'css'){
       const pathToDonorFile = path.join(__dirname, 'styles', file)
-      readFile(pathToDonorFile, 'utf8', (err, data) => {
-        if(err){
-          console.log(err);
-        }
+      const donorData = await readFile(pathToDonorFile, 'utf8')
 
-        appendFile(pathToStyleDist, data, err => {
-          if(err){
-            console.error(err)
-          }
-          console.log('success appending ' + file);
-        })
+      appendFile(pathToStyleDist, donorData, err => {
+        if(err){
+          console.error(err)
+        }
+        console.log('success appending ' + file);
       })
+
     }
   }
 }
 
 async function build(){
+  await rm(pathToDist, {recursive: true, force: true});
+
   createFolder(pathToDist)
   createFolder(pathToDistAssets)
   createFile(pathToDistHtml)
@@ -103,18 +102,16 @@ async function build(){
   }
 
   const componentsFiles = await readdir(pathToComponents)
+  let templateData = await readFile(path.join(__dirname, 'template.html'), 'utf-8')
 
   for(const componentFile of componentsFiles) {
     const nameOfCurrentComponent = componentFile.split('.')[0]
     const pathToCurrentComponent = path.join(pathToComponents, componentFile)
 
-    const templateData = await readFile(pathToDistHtml, 'utf-8')
     const componentData = await readFile(pathToCurrentComponent, 'utf-8')
+    templateData = templateData.replace(`{{${nameOfCurrentComponent}}}`, componentData.toString())
 
-    const result = templateData.replace(`{{${nameOfCurrentComponent}}}`, componentData.toString())
-
-    await writeFile(pathToDistHtml, result)
-
+    await writeFile(pathToDistHtml, templateData)
   }
 
 }
